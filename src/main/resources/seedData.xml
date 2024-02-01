@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userAuthority" class="com.ug.projekt1blog.models.Authority">
+        <property name="authority_name" value="ROLE_USER"/>
+    </bean>
+
+    <bean id="adminAuthority" class="com.ug.projekt1blog.models.Authority">
+        <property name="authority_name" value="ROLE_ADMIN"/>
+    </bean>
+
+    <bean id="adminAccount" class="com.ug.projekt1blog.models.Account">
+        <property name="email" value="admin@mail.com"/>
+        <property name="firstName" value="Jan"/>
+        <property name="lastName" value="Adminowski"/>
+        <property name="password" value="Admin.123"/>
+        <property name="confirmPassword" value="Admin.123"/>
+        <property name="authorities">
+            <set>
+                <ref bean="adminAuthority"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="userAccount" class="com.ug.projekt1blog.models.Account">
+        <property name="email" value="user@mail.com"/>
+        <property name="firstName" value="Jan"/>
+        <property name="lastName" value="Userowski"/>
+        <property name="password" value="User.123"/>
+        <property name="confirmPassword" value="User.123"/>
+        <property name="authorities">
+            <set>
+                <ref bean="userAuthority"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="post1" class="com.ug.projekt1blog.models.Post">
+        <property name="title" value="Post 1"/>
+        <property name="content" value="Content 1"/>
+        <property name="authors">
+            <list>
+                <ref bean="adminAccount"/>
+                <ref bean="userAccount"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="post2" class="com.ug.projekt1blog.models.Post">
+        <property name="title" value="Post 2"/>
+        <property name="content" value="Content 2"/>
+        <property name="authors">
+            <list>
+                <ref bean="adminAccount"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="rating" class="com.ug.projekt1blog.models.Rating">
+        <property name="post" ref="post1"/>
+        <property name="account" ref="adminAccount"/>
+        <property name="ratingValue" value="4"/>
+    </bean>
+
+    <bean id="comment1" class="com.ug.projekt1blog.models.Comment">
+        <property name="content" value="Comment 1 cos tam"/>
+        <property name="author" ref="adminAccount"/>
+        <property name="post" ref="post1"/>
+    </bean>
+
+    <bean id="comment2" class="com.ug.projekt1blog.models.Comment">
+        <property name="content" value="Comment2 cos tam"/>
+        <property name="author" ref="userAccount"/>
+        <property name="post" ref="post1"/>
+    </bean>
+
+    <bean id="comment3" class="com.ug.projekt1blog.models.Comment">
+        <property name="content" value="Comment 3 cos tam"/>
+        <property name="author" ref="adminAccount"/>
+        <property name="post" ref="post2"/>
+    </bean>
+
+</beans>
